@@ -2,23 +2,28 @@
 
 var https = require('https');
 
-getOrders();
-
 // get orders from coinbase
 function getOrders(req,res) {
-	var get = https.get("https://coinbase.com/api/v1/orders?api_key=" + 'process.env.COINBASE_API_KEY', gotOrders);
+	var body = '';
+
+	var get = https.get("https://coinbase.com/api/v1/orders?api_key=" + 'process.env.COINBASE_API_KEY', function (result){
+	    result.on('data', function(chunk) {body += chunk;});
+
+	    result.on('end', function(chunk){
+	    	if (chunk) {
+	    	    body += chunk;
+	    	}
+	    	console.log(body);
+	    	console.log('{"result": "success", "data" : ' + body + '}');
+	        res.send('{"result": "success", "data" : ' + body + '}');
+	    });
+	});
 	get.on('error', function(e) {
      console.log('{"result" : "error", "error": e.message}');
-     // res.send ('{"result" : "error", "error": e.message}')
-
+     res.send ('{"result" : "error", "error": e.message}');
     });
-}
 
 
-function gotOrders(res){
-	var body = '';
-    res.on('data', function(chunk) {body += chunk;});
-    res.on('end', function() {
-		console.log('{"result": "success", { "data" : ' + body + '}');
-	});
 }
+
+module.exports = getOrders
