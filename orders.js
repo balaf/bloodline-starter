@@ -6,7 +6,7 @@ var https = require('https');
 function getOrders(req,res) {
 	var body = '';
 
-	var get = https.get("https://coinbase.com/api/v1/orders?api_key=" + 'process.env.COINBASE_API_KEY', function (result){
+	var get = https.get("https://coinbase.com/api/v1/orders?api_key=" + process.env.COINBASE_API_KEY, function (result){
 	    result.on('data', function(chunk) {body += chunk;});
 
 	    result.on('end', function(chunk){
