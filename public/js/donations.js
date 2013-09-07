@@ -6,8 +6,14 @@ $(document).ready(function() {
 
     $.get('/orders', function(result) {
     	result = JSON.parse(result);
-    	var newhtml    = template(result['data']['orders']);
-    	$("#donations").html(newhtml);
+        
+    	for (var i=0; i<result.data.orders.length;i++){
+    		result.data.orders[i].order.total_btc.cents /= 100000000;
+    	}
+
+    	var newhtml = template(result.data);
+    	console.log(newhtml)
+    	$("#orders").html(newhtml);
     	console.log(newhtml)
     });
 

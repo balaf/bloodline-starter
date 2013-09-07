@@ -13,6 +13,16 @@
     <script src="../js/handlebars.js"></script>
    </head>
   <body>
+    <script id="donations" type="text/x-handlebars-template">
+            {{#each orders}}
+              <tr>
+              <td>{{order.id}}</td>
+              <td>{{order.total_btc.cents}}</td>
+              <td>{{order.status}}</td>
+              <td>{{order.created_at}}</td>
+            </tr>
+            {{/each}}
+    </script>
 
       <div class="navbar-wrapper">
         <div class="container">
@@ -47,24 +57,13 @@
             <tr>
               <th>Coinbase ID</th>
               <th>Bitcoins</th>
-              <th>Value in USD</th>
               <th>Status</th>
               <th>Transaction time</th>
             </tr>
           </thead>
-          <tbody>
-          <script id="donations" type="text/x-handlebars-template">
-            {{#each orders}}
-              <tr>
-              <td>{{id}}</td>
-              <td>{{total_btc.cents}}</td>
-              <td>{{total_native.cents}}</td>
-              <td>{{status}}</td>
-              <td>{{created_at}}</td>
-            </tr>
-            {{/each}}
-            </script>
-            </tbody>
+          <tbody id="orders">
+
+          </tbody>
           </table>
       </div>
 
